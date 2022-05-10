@@ -22,12 +22,11 @@
 <body>
 	<h1>basic events</h1>
 	<section id="contract">
-		<div class="card-container">
-			<div class="card" @mouseover="onLogEvent">Mouse over</div>
-			<div class="card" @mouseleave="onLogEvent">Mouse leave</div>
-			<div class="card" @dblclick="onLogEvent($event, 150, 10)">Double click</div>
-			<div class="card" @mousemove="onMouseMoveEvent">
-				Mouse move: {{`${x}:${y}`}}
+		<div class="card-container card-products" :class="testClass">
+			<div class="card" v-for="product in products">
+				<img class="card-thumb" :src="product.thumb" />
+				<h3>{{product.name}}</h3>
+				<p>{{product.price}}</p>
 			</div>
 		</div>
 	</section>
