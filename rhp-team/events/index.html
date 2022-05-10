@@ -7,14 +7,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>basic events</title>
 	<style>
+		.card-products {
+			display: flex;
+			flex-direction: row;
+		}
+
 		.card {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-start;
 			width: 180px;
 			height: 180px;
-			background-color: bisque;
+			background: aquamarine;
 			margin: 10px;
+		}
+
+		.card.cart {
+			background: coral;
 		}
 	</style>
 </head>
@@ -23,7 +33,8 @@
 	<h1>basic events</h1>
 	<section id="contract">
 		<div class="card-container card-products" :class="testClass">
-			<div class="card" v-for="product in products">
+			<div class="card" v-for="product in products" :class="{cart: product.isInCard}"
+				@dblclick="onToggleCart($event, product)">
 				<img class="card-thumb" :src="product.thumb" />
 				<h3>{{product.name}}</h3>
 				<p>{{product.price}}</p>
