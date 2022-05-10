@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>basic events</title>
+	<style>
+		.card {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 180px;
+			height: 180px;
+			background-color: bisque;
+			margin: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>basic events</h1>
+	<section id="contract">
+		<div class="card-container">
+			<div class="card" @mouseover="onLogEvent">Mouse over</div>
+			<div class="card" @mouseleave="onLogEvent">Mouse leave</div>
+			<div class="card" @dblclick="onLogEvent($event, 150, 10)">Double click</div>
+			<div class="card" @mousemove="onMouseMoveEvent">
+				Mouse move: {{`${x}:${y}`}}
+			</div>
+		</div>
+	</section>
+
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="main.js"></script>
+</body>
+
+</html>
