@@ -20,6 +20,9 @@ export default {
     imgBackFaceUrl: {
       type: String,
       required: true,
+    },
+    card: {
+      type: [String, Number, Array, Object]
     }
   },
   data() {
@@ -30,7 +33,11 @@ export default {
   methods: {
     onToggleFlipCard() {
       this.isFlipped = !this.isFlipped;
+      if (this.isFlipped) this.$emit('onFlip', this.card);
     },
+    onFlipBackCard() {
+      this.isFlipped = false;
+    }
   }
 };
 </script>
