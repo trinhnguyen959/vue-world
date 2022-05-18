@@ -1,9 +1,21 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{disabled: isDisable}"
+       :style="{
+            height: `${(920 - 16 * 4)/Math.sqrt(cardsContext.length) - 16}px`,
+            width: `${((920 - 16 * 4)/Math.sqrt(cardsContext.length) - 16) *
+            3 / 4}px`,
+            perspective: `${((920 - 16 * 4)/Math.sqrt(cardsContext.length) - 16) *
+            3 / 4 * 2}px`
+       }">
     <div class="card__inner" :class="{'is-flipped': isFlipped}"
          @click="onToggleFlipCard">
       <div class="card__face card__face--front">
-        <div class="card__content"/>
+        <div class="card__content" :style="{
+          backgroundSize: `${(((920 - 16 * 4)/Math.sqrt(cardsContext.length) -
+           16) * 3) / 4 / 3}px
+           ${(((920 - 16 * 4)/Math.sqrt(cardsContext.length) - 16) * 3) / 4 /
+            3}px`
+        }"/>
       </div>
       <div class="card__face card__face--back">
         <div class="card__content"
@@ -23,21 +35,32 @@ export default {
     },
     card: {
       type: [String, Number, Array, Object]
+    },
+    cardsContext: {
+      type: Array,
+      default: function () {
+        return [];
+      },
     }
   },
   data() {
     return {
       isFlipped: false,
+      isDisable: false,
     };
   },
   methods: {
     onToggleFlipCard() {
+      if (this.isDisable) return false;
       this.isFlipped = !this.isFlipped;
       if (this.isFlipped) this.$emit('onFlip', this.card);
     },
     onFlipBackCard() {
       this.isFlipped = false;
-    }
+    },
+    onSwitchMode() {
+      this.isDisable = true;
+    },
   }
 };
 </script>
@@ -76,8 +99,7 @@ export default {
 }
 
 .card__face--front .card__content {
-  background: url("../assets/images/icon_back.png") no-repeat center;
-  background-size: 40px 40px;
+  background: url("../assets/images/icon_back.png") no-repeat center center;
   width: 100%;
   height: 100%;
 }
@@ -88,10 +110,14 @@ export default {
 }
 
 .card__face--back .card__content {
-  background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: contain;
   height: 100%;
   width: 100%;
+}
+
+.card.disabled .card__inner {
+  cursor: default;
 }
 </style>

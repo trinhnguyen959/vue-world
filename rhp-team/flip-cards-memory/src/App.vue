@@ -1,20 +1,28 @@
 <template>
   <interact-screen v-if="statusMatch ==='match'"
-                   :cardsContext="settings.cardsContext"/>
+                   :cardsContext="settings.cardsContext"
+                   @onFinish="onGetResult"/>
   <main-screen v-if="statusMatch === 'default'"
                @onStart="onHandleForStart($event)"></main-screen>
+  <result-screen v-if="statusMatch === 'result'" :timer="timer"
+                 @onStartAgain="statusMatch = 'default'"></result-screen>
+  <copy-right></copy-right>
 </template>
 
 <script>
 import InteractScreen from '@/components/InteractScreen';
 import MainScreen from '@/components/MainScreen';
 import {shuffled} from '@/utils/arrays';
+import ResultScreen from '@/components/ResultScreen';
+import CopyRight from '@/components/CopyRight';
 
 export default {
   name: 'App',
   components: {
     InteractScreen,
     MainScreen,
+    ResultScreen,
+    CopyRight
   },
   data() {
     return {
@@ -24,6 +32,7 @@ export default {
         startedAt: '',
       },
       statusMatch: 'default',
+      timer: 0,
     };
   },
   methods: {
@@ -43,7 +52,15 @@ export default {
 
       // data ready
       this.statusMatch = 'match';
-    }
+    },
+    onGetResult() {
+      // getTimer
+      this.timer = new Date().getTime() - this.settings.startedAt;
+
+      // switch to get result component
+      this.statusMatch = 'result';
+    },
+
   },
 };
 </script>
