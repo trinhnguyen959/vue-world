@@ -1,4 +1,5 @@
 <template>
+	<h1>hello dom</h1>
 	<base-nav />
 	<router-view></router-view>
 </template>
@@ -10,6 +11,8 @@ export default {
 	components: {
 		BaseNav: Nav,
 	},
+	created() {},
+	mounted() {},
 };
 </script>
 
